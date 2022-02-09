@@ -4,7 +4,6 @@ import KIP17ABI from "../abi/KIP17TokenABI.json";
 import {
   ACCESS_KEY_ID,
   SECRET_ACCRESS_KEY,
-  COUNT_CONTRACT_ADDRESS,
   NFT_CONTRACT_ADDRESS,
   CHAIN_ID,
 } from "../constants";
