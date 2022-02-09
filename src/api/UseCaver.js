@@ -50,10 +50,12 @@ export const fetchCardsOf = async (address) => {
   const tokenUris = [];
   for (let i = 0; i < balance; i++) {
     const metadataUrl = await NFTContract.methods.tokenURI(tokenIds[i]).call(); // -> metadata kas 주소
+    console.log(1, metadataUrl);
     const response = await axios.get(metadataUrl); // 실제 메타데이터가 들어있다.
+    console.log(2, response);
     const uriJSON = response.data;
-
     tokenUris.push(uriJSON.image);
+    console.log(3, tokenUris);
   }
   const nfts = [];
   for (let i = 0; i < balance; i++) {
