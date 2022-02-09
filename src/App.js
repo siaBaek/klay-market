@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import QRCode from "qrcode.react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faWallet, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getBalance, fetchCardsOf } from "./api/UseCaver";
 import * as KlipAPI from "./api/UseKlip";
 import "bootstrap/dist/css/bootstrap.min.css"; // 이거 아래에 App.css 있어야함
@@ -30,9 +32,7 @@ const DEFAULT_ADDRESS = "0x000000000000000000000000";
 function App() {
   const [nfts, setNfts] = useState([]); // {id: "101", uri: "string"}
   const [myBalance, setMyBalance] = useState("0");
-  const [myAddress, setMyAddress] = useState(
-    "0xA5707282Da9FC57C09e159B61cE9DAA646F838D4"
-  );
+  const [myAddress, setMyAddress] = useState("0x000000000000000000000000");
 
   // UI
   const [qrvalue, setQrvalue] = useState(DEFAULT_QR_CODE);
@@ -151,7 +151,9 @@ function App() {
           variant={"balance"}
           style={{ backgroundColor: "#f78f", fontSize: 25 }}
         >
-          {myBalance} Klay
+          {myAddress !== DEFAULT_ADDRESS
+            ? `${myBalance} Klay`
+            : "지갑 연동하기"}
         </Alert>
         {qrvalue !== "DEFAULT" ? (
           <Container
@@ -295,6 +297,7 @@ function App() {
           </Button>
         </Modal.Footer>
       </Modal>
+
       {/* 탭 */}
       <nav
         style={{ backgroundColor: "#1b1717", height: 45 }}
@@ -310,7 +313,9 @@ function App() {
               }}
               className="row d-flex flex-column justify-content-center align-items-center"
             >
-              <div>MARKET</div>
+              <div>
+                <FontAwesomeIcon color="white" size="lg" icon={faHome} />
+              </div>
             </div>
             <div
               onClick={() => {
@@ -318,7 +323,9 @@ function App() {
               }}
               className="row d-flex flex-column justify-content-center align-items-center"
             >
-              <div>MINT</div>
+              <div>
+                <FontAwesomeIcon color="white" size="lg" icon={faPlus} />
+              </div>
             </div>
             <div
               onClick={() => {
@@ -327,7 +334,9 @@ function App() {
               }}
               className="row d-flex flex-column justify-content-center align-items-center"
             >
-              <div>WALLET</div>
+              <div>
+                <FontAwesomeIcon color="white" size="lg" icon={faWallet} />
+              </div>
             </div>
           </div>
         </Nav>
