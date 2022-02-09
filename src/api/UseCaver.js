@@ -1,3 +1,4 @@
+import axios from "axios";
 import Caver from "caver-js";
 // import CounterABI from "../abi/CounterABI.json";
 import KIP17ABI from "../abi/KIP17TokenABI.json";
@@ -48,8 +49,11 @@ export const fetchCardsOf = async (address) => {
   // Fetch Token URIs
   const tokenUris = [];
   for (let i = 0; i < balance; i++) {
-    const uri = await NFTContract.methods.tokenURI(tokenIds[i]).call();
-    tokenUris.push(uri);
+    const metadataUrl = await NFTContract.methods.tokenURI(tokenIds[i]).call(); // -> metadata kas 주소
+    const response = await axios.get(metadataUrl); // 실제 메타데이터가 들어있다.
+    const uriJSON = response.data;
+
+    tokenUris.push(uriJSON.image);
   }
   const nfts = [];
   for (let i = 0; i < balance; i++) {

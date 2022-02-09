@@ -29,10 +29,13 @@ const onPressButton2 = (_balance, _setBalance) => {
 };
 const DEFAULT_QR_CODE = "DEFAULT";
 const DEFAULT_ADDRESS = "0x000000000000000000000000";
+
 function App() {
   const [nfts, setNfts] = useState([]); // {id: "101", uri: "string"}
   const [myBalance, setMyBalance] = useState("0");
-  const [myAddress, setMyAddress] = useState("0x000000000000000000000000");
+  const [myAddress, setMyAddress] = useState(
+    "0xA5707282Da9FC57C09e159B61cE9DAA646F838D4"
+  );
 
   // UI
   const [qrvalue, setQrvalue] = useState(DEFAULT_QR_CODE);
