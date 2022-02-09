@@ -10,10 +10,12 @@ import {
   Alert,
   Button,
   Card,
+  Col,
   Container,
   Form,
   Modal,
   Nav,
+  Row,
 } from "react-bootstrap";
 import { MARKET_CONTRACT_ADDRESS } from "./constants";
 
@@ -42,6 +44,8 @@ function App() {
     title: "MODAL",
     onConfirm: () => {},
   });
+
+  const rows = nfts.slice(nfts.length / 2);
 
   const fetchMarketNFTs = async () => {
     const _nfts = await fetchCardsOf(MARKET_CONTRACT_ADDRESS);
@@ -167,14 +171,42 @@ function App() {
         {/* 갤러리(마켓, 내 지갑) */}
         {tab === "MARKET" || tab === "WALLET" ? (
           <div className="container" style={{ padding: 0, width: "100%" }}>
-            {nfts.map((nft, index) => (
+            {rows.map((o, rowIndex) => (
+              <Row>
+                <Col style={{ marginRight: 0, paddingRight: 0 }}>
+                  <Card
+                    onClick={() => {
+                      onClickCard(nfts[rowIndex * 2].id);
+                    }}
+                  >
+                    <Card.Img src={nfts[rowIndex * 2].uri} />
+                  </Card>
+                  [{nfts[rowIndex * 2].id}]NFT
+                </Col>
+                <Col style={{ marginRight: 0, paddingRight: 0 }}>
+                  {nfts.length > rowIndex * 2 + 1 ? (
+                    <Card
+                      onClick={() => {
+                        onClickCard(nfts[rowIndex * 2 + 1].id);
+                      }}
+                    >
+                      <Card.Img src={nfts[rowIndex * 2 + 1].uri} />
+                    </Card>
+                  ) : null}
+                  {nfts.length > rowIndex * 2 + 1 ? (
+                    <> [{nfts[rowIndex * 2 + 1].id}]NFT</>
+                  ) : null}
+                </Col>
+              </Row>
+            ))}
+            {/* {nfts.map((nft, index) => (
               <Card.Img
                 key={`imagekey${index}`}
                 onClick={() => onClickCard(nft.id)}
                 className="img-responsive"
                 src={nfts[index].uri}
               />
-            ))}
+            ))} */}
           </div>
         ) : null}
 
@@ -220,6 +252,11 @@ function App() {
           </div>
         ) : null}
       </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
 
       {/* 모달 */}
       <Modal
