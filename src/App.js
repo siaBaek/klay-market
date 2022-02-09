@@ -6,7 +6,15 @@ import * as KlipAPI from "./api/UseKlip";
 import "bootstrap/dist/css/bootstrap.min.css"; // 이거 아래에 App.css 있어야함
 import "./App.css";
 import "./market.css";
-import { Alert, Button, Card, Container, Form, Nav } from "react-bootstrap";
+import {
+  Alert,
+  Button,
+  Card,
+  Container,
+  Form,
+  Modal,
+  Nav,
+} from "react-bootstrap";
 import { MARKET_CONTRACT_ADDRESS } from "./constants";
 
 function onPressButton(balance) {
@@ -29,6 +37,11 @@ function App() {
   const [tab, setTab] = useState("MINT"); // MARKET, MINT, WALLET
   const [mintImageUrl, setMintImageUrl] = useState("");
   // Modal
+  const [showModal, setShowModal] = useState(false);
+  const [modalProps, setModalProps] = useState({
+    title: "MODAL",
+    onConfirm: () => {},
+  });
 
   const fetchMarketNFTs = async () => {
     const _nfts = await fetchCardsOf(MARKET_CONTRACT_ADDRESS);
@@ -63,10 +76,22 @@ function App() {
 
   const onClickCard = (id) => {
     if (tab === "WALLET") {
-      onClickMyCard(id);
+      setModalProps({
+        title: "NFT를 마켓에 올리시겠어요?",
+        onConfirm: () => {
+          onClickMyCard(id);
+        },
+      });
+      setShowModal(true);
     }
     if (tab === "MARKET") {
-      onClickMarketCard(id);
+      setModalProps({
+        title: "NFT를 구매하시겠어요?",
+        onConfirm: () => {
+          onClickMarketCard(id);
+        },
+      });
+      setShowModal(true);
     }
   };
 
@@ -83,11 +108,17 @@ function App() {
   };
 
   const getUserData = () => {
-    KlipAPI.getAddress(setQrvalue, async (address) => {
-      setMyAddress(address);
-      const _balance = await getBalance(address);
-      setMyBalance(_balance);
+    setModalProps({
+      title: "Klip 지갑을 연동하시겠습니까?",
+      onConfirm: () => {
+        KlipAPI.getAddress(setQrvalue, async (address) => {
+          setMyAddress(address);
+          const _balance = await getBalance(address);
+          setMyBalance(_balance);
+        });
+      },
     });
+    setShowModal(true);
   };
 
   useEffect(() => {
@@ -191,6 +222,42 @@ function App() {
       </div>
 
       {/* 모달 */}
+      <Modal
+        centered
+        size="sm"
+        show={showModal}
+        onHide={() => {
+          setShowModal(false);
+        }}
+      >
+        <Modal.Header
+          style={{ border: 0, backgroundColor: "black", opacity: 0.8 }}
+        >
+          <Modal.Title>{modalProps.title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer
+          style={{ border: 0, backgroundColor: "black", opacity: 0.8 }}
+        >
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowModal(false);
+            }}
+          >
+            닫기
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              modalProps.onConfirm();
+              setShowModal(false);
+            }}
+            style={{ backgroundColor: "#810034", borderColor: "#810034" }}
+          >
+            진행
+          </Button>
+        </Modal.Footer>
+      </Modal>
       {/* 탭 */}
       <nav
         style={{ backgroundColor: "#1b1717", height: 45 }}
