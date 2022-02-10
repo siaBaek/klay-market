@@ -152,7 +152,7 @@ function App() {
           style={{ backgroundColor: "#f78f", fontSize: 25 }}
         >
           {myAddress !== DEFAULT_ADDRESS
-            ? `${myBalance} Klay`
+            ? `${myBalance} KLAY`
             : "지갑 연동하기"}
         </Alert>
         {qrvalue !== "DEFAULT" ? (
