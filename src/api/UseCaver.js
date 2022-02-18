@@ -19,7 +19,7 @@ const option = {
         ),
     },
     {
-      name: "X-chain-id",
+      name: "x-chain-id",
       value: CHAIN_ID,
     },
   ],

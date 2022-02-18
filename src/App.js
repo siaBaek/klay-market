@@ -36,7 +36,7 @@ function App() {
 
   // UI
   const [qrvalue, setQrvalue] = useState(DEFAULT_QR_CODE);
-  const [tab, setTab] = useState("MINT"); // MARKET, MINT, WALLET
+  const [tab, setTab] = useState("MARKET"); // MARKET, MINT, WALLET
   const [mintImageUrl, setMintImageUrl] = useState("");
   // Modal
   const [showModal, setShowModal] = useState(false);
@@ -201,14 +201,6 @@ function App() {
                 </Col>
               </Row>
             ))}
-            {/* {nfts.map((nft, index) => (
-              <Card.Img
-                key={`imagekey${index}`}
-                onClick={() => onClickCard(nft.id)}
-                className="img-responsive"
-                src={nfts[index].uri}
-              />
-            ))} */}
           </div>
         ) : null}
 
